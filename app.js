@@ -9,8 +9,10 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+let employeeArray = [];
 
 function main() {
+
     inquirer.prompt([ //I need to set up multiple question sections based on how they answer what role they have, one for team
         {
             type: "list",
@@ -35,9 +37,15 @@ function main() {
                 case "Intern":
                     optionC();
                     break;
+                default:
+                    writeToFile(employeeArray);
             }
         })
 }
+function writeToFile(data) {
+    fs.writeFileSync(outputPath, render(data), "utf-8");
+    console.log(employeeArray);
+};
 
 function optionA() {
     inquirer.prompt([
@@ -63,12 +71,13 @@ function optionA() {
             name: "office"
         }
     ]).then((answers) => {
-        const name = answers.name;
-        const email = answers.email;
-        const id = answers.id;
-        const office = answers.office;
+        name = answers.name;
+        email = answers.email;
+        id = answers.id;
+        office = answers.office;
         let mgmt = new Manager(name, email, id, office);
-        array.push(mgmt);
+        employeeArray.push(mgmt);
+        console.log(employeeArray);
         main();
 
     })
@@ -99,22 +108,17 @@ function optionB() {
             name: "github"
         }
     ]).then((answers) => {
-        const name = answers.name;
-        const email = answers.email;
-        const id = answers.id;
-        const office = answers.github;
+        name = answers.name;
+        email = answers.email;
+        id = answers.id;
+        github = answers.github;
         let engin = new Engineer(name, email, id, github);
-        array.push(engin);
+        employeeArray.push(engin);
         main();
     }
-    )}
-// .then((answers) => {
-//     const name = answers.name;
-//     const email = answers.email;
-//     const id = answers.id;
-//     const gihub = answers.github;
-//     }
-// )} 
+    )
+}
+
 
 function optionC() {
     inquirer.prompt([
@@ -140,15 +144,18 @@ function optionC() {
             name: "school"
         }
     ]).then((answers) => {
-        const name = answers.name;
-        const email = answers.email;
-        const id = answers.id;
-        const office = answers.school;
+        name = answers.name;
+        email = answers.email;
+        id = answers.id;
+        school = answers.school;
         let int = new Intern(name, email, id, school);
-        array.push(int);
+        employeeArray.push(int);
         main();
     }
-    )}
+    )
+}
+
+
 // .then((answers) => {
 //     const name = answers.name;
 //     const email = answers.email;
@@ -191,17 +198,14 @@ function optionC() {
 //     writeToFile(answersNoCommas);
 // };
 
-array = [mgmt, engin, int]
+
+
+
 // //is this how i do the object array and pass it in?
-// render(array);
 
 
-// function writeToFile(data) {
-//     fs.writeFile('team.html', data, function (err) {
-//         if (err) throw err;
-//         console.log('File Created!');
-//     });
-// }
+
+
 
 
 main();
