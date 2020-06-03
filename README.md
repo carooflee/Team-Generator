@@ -1,17 +1,17 @@
 # Team-Generator
 
-##Description
+## Description
 
 This is a command line generated team generator, built from user-answered questions. 
 
-##Installation
+## Installation
     npm install
     
-##Use
+## Use
     node app.js
     
-##License
+## License
 MIT License
 
-##Contributers
+## Contributers
 Caroline Lee
